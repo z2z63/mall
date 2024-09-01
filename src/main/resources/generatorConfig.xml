@@ -10,6 +10,9 @@
 
         <javaClientGenerator targetPackage="com.example.mall.mappers" targetProject="src/main/java"/>
 
-        <table tableName="UmsAdmin" />
+        <table tableName="ums_admin" mapperName="GeneratedUmsAdminMapper"/>
+        <table tableName="ums_role" mapperName="GeneratedUmsRoleMapper"/>
+        <table tableName="ums_menu" mapperName="GeneratedUmsMenuMapper"/>
+        <table tableName="pms_product" mapperName="GeneratedPmsProductMapper"/>
     </context>
 </generatorConfiguration>

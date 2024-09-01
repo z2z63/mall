@@ -3,6 +3,8 @@ package com.example.mall;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
+
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,22 +22,25 @@ import java.util.Map;
 public class JwtUtil {
     @Value("${jwt.secret}")
     private String secret;
-    @Value("${jwt.expiration}")
+    @Value("${jwt.expire}")
     private long expiration;
     @Value("${jwt.tokenHead}")
     private String BEARER;
     private static final String CLAIM_KEY_USERNAME = "sub";
     private static final String CLAIM_KEY_CREATED = "created";
-    private final SecretKey key;
+    private SecretKey key;
 
-    JwtUtil() {
-        key = new SecretKeySpec(secret.getBytes(), "AES");
+    public JwtUtil() {
+    }
 
+    @PostConstruct
+    public void postConstructor() {
+        key = new SecretKeySpec(secret.getBytes(), "HMACSHA256");
     }
 
     private String generateToken(Map<String, Object> claims) {
         Date expire = new Date(System.currentTimeMillis() + expiration * 1000);
-        return Jwts.builder().subject("Joe").signWith(key).expiration(expire).compact();
+        return Jwts.builder().claims(claims).expiration(expire).signWith(key).compact();
     }
 
     public String generateToken(UserDetails userDetails) {
@@ -66,6 +71,7 @@ public class JwtUtil {
         }
         return claims;
     }
+
     public static String getUsernameFromClaims(Claims claims) {
         return claims.getSubject();
     }

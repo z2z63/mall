@@ -1,6 +1,6 @@
 package com.example.mall;
 
-import com.example.mall.model.Umsadmin;
+import com.example.mall.model.UmsAdmin;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,9 +9,9 @@ import java.util.Collection;
 import java.util.List;
 
 public class AdminUserDetails implements UserDetails {
-    private final Umsadmin umsadmin;
+    private final UmsAdmin umsadmin;
 
-    public AdminUserDetails(Umsadmin umsadmin) {
+    public AdminUserDetails(UmsAdmin umsadmin) {
         this.umsadmin = umsadmin;
     }
 

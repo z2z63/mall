@@ -22,6 +22,15 @@ public class BodyResult<T> {
         return new BodyResult<>(ResultCode.FAILED.code, message, data);
     }
 
+    public static <T> BodyResult<T> fail(Integer code, String message, T data) {
+        return new BodyResult<>(code, message, data);
+    }
+
+    public static <T> BodyResult<T> fail(Integer code, String message) {
+        return fail(code, message, null);
+    }
+
+
     public static <T> BodyResult<T> fail(T data) {
         return fail(ResultCode.FAILED.message, data);
     }
@@ -29,6 +38,7 @@ public class BodyResult<T> {
     public static <T> BodyResult<T> fail() {
         return fail(null);
     }
+
     public static <T> BodyResult<T> fail(String message) {
         return fail(message, null);
     }

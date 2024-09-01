@@ -1,15 +1,13 @@
 package com.example.mall;
 
 
-import com.example.mall.mappers.UmsadminDynamicSqlSupport;
-import com.example.mall.mappers.UmsadminMapper;
-import com.example.mall.model.Umsadmin;
+import com.example.mall.mappers.UmsAdminMapper;
+import com.example.mall.model.UmsAdmin;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.mybatis.dynamic.sql.select.join.EqualTo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,13 +15,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Optional;
 
-import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
 
 @Slf4j
 @Component
@@ -62,16 +60,17 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(details, null, details.getAuthorities());
-        auth.setDetails(details);
+        auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         log.info("authenticated username:{}", username);
         SecurityContextHolder.getContext().setAuthentication(auth);
+        filterChain.doFilter(request, response);
     }
 
     @Bean
     @Autowired
-    public UserDetailsService userDetailsService(UmsadminMapper umsadminMapper) {
+    public static UserDetailsService userDetailsService(UmsAdminMapper umsadminMapper) {
         return username -> {
-            Optional<Umsadmin> admin = umsadminMapper.selectOne(c -> c.where(UmsadminDynamicSqlSupport.username, isEqualTo(username)));
+            Optional<UmsAdmin> admin = umsadminMapper.getAdminByUsername(username);
             return admin.map(AdminUserDetails::new).orElse(null);
         };
     }
