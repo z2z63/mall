@@ -1,46 +1,47 @@
 package com.example.mall.mappers.generated;
 
 import jakarta.annotation.Generated;
-import java.sql.JDBCType;
-import java.util.Date;
 import org.mybatis.dynamic.sql.AliasableSqlTable;
 import org.mybatis.dynamic.sql.SqlColumn;
 
+import java.sql.JDBCType;
+import java.util.Date;
+
 public final class UmsAdminDynamicSqlSupport {
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2024-09-01T22:50:34.756337981+08:00", comments="Source Table: ums_admin")
+    @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2024-09-03T13:00:33.8691495+08:00", comments = "Source Table: ums_admin")
     public static final UmsAdmin umsAdmin = new UmsAdmin();
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2024-09-01T22:50:34.756584936+08:00", comments="Source field: ums_admin.id")
+    @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2024-09-03T13:00:33.8701482+08:00", comments = "Source field: ums_admin.id")
     public static final SqlColumn<Long> id = umsAdmin.id;
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2024-09-01T22:50:34.756861574+08:00", comments="Source field: ums_admin.username")
+    @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2024-09-03T13:00:33.8701482+08:00", comments = "Source field: ums_admin.username")
     public static final SqlColumn<String> username = umsAdmin.username;
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2024-09-01T22:50:34.756931274+08:00", comments="Source field: ums_admin.password")
+    @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2024-09-03T13:00:33.8701482+08:00", comments = "Source field: ums_admin.password")
     public static final SqlColumn<String> password = umsAdmin.password;
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2024-09-01T22:50:34.757008518+08:00", comments="Source field: ums_admin.icon")
+    @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2024-09-03T13:00:33.8701482+08:00", comments = "Source field: ums_admin.icon")
     public static final SqlColumn<String> icon = umsAdmin.icon;
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2024-09-01T22:50:34.757055241+08:00", comments="Source field: ums_admin.email")
+    @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2024-09-03T13:00:33.8701482+08:00", comments = "Source field: ums_admin.email")
     public static final SqlColumn<String> email = umsAdmin.email;
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2024-09-01T22:50:34.757115303+08:00", comments="Source field: ums_admin.nick_name")
+    @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2024-09-03T13:00:33.8701482+08:00", comments = "Source field: ums_admin.nick_name")
     public static final SqlColumn<String> nickName = umsAdmin.nickName;
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2024-09-01T22:50:34.75716056+08:00", comments="Source field: ums_admin.note")
+    @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2024-09-03T13:00:33.8711414+08:00", comments = "Source field: ums_admin.note")
     public static final SqlColumn<String> note = umsAdmin.note;
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2024-09-01T22:50:34.757212242+08:00", comments="Source field: ums_admin.create_time")
+    @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2024-09-03T13:00:33.8711414+08:00", comments = "Source field: ums_admin.create_time")
     public static final SqlColumn<Date> createTime = umsAdmin.createTime;
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2024-09-01T22:50:34.757258127+08:00", comments="Source field: ums_admin.login_time")
+    @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2024-09-03T13:00:33.8711414+08:00", comments = "Source field: ums_admin.login_time")
     public static final SqlColumn<Date> loginTime = umsAdmin.loginTime;
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2024-09-01T22:50:34.7573353+08:00", comments="Source field: ums_admin.status")
+    @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2024-09-03T13:00:33.8711414+08:00", comments = "Source field: ums_admin.status")
     public static final SqlColumn<Integer> status = umsAdmin.status;
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2024-09-01T22:50:34.756465649+08:00", comments="Source Table: ums_admin")
+    @Generated(value = "org.mybatis.generator.api.MyBatisGenerator", date = "2024-09-03T13:00:33.8701482+08:00", comments = "Source Table: ums_admin")
     public static final class UmsAdmin extends AliasableSqlTable<UmsAdmin> {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 

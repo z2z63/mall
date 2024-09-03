@@ -9,8 +9,8 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 import java.util.Optional;
 
+import static com.example.mall.mappers.generated.UmsAdminDynamicSqlSupport.username;
 import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
-import static com.example.mall.mappers.generated.UmsAdminDynamicSqlSupport.*;
 
 @Mapper
 public interface UmsAdminMapper extends GeneratedUmsAdminMapper {

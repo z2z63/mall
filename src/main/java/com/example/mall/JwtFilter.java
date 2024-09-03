@@ -1,26 +1,24 @@
 package com.example.mall;
 
 
-import com.example.mall.mappers.UmsAdminMapper;
-import com.example.mall.model.UmsAdmin;
 import io.jsonwebtoken.Claims;
-import jakarta.servlet.*;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Optional;
 
 
 @Slf4j
@@ -32,11 +30,14 @@ public class JwtFilter extends OncePerRequestFilter {
     private String tokenHeader;
     @Value("${jwt.tokenHead}")
     private String tokenHead;
+
+    private final AuthenticationManager authManager;
     private final UserDetailsService userDetailsService;
 
     @Autowired
-    public JwtFilter(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
+    public JwtFilter(JwtUtil jwtUtil, AuthenticationManager authManager, UserDetailsService userDetailsService) {
         this.jwtUtil = jwtUtil;
+        this.authManager = authManager;
         this.userDetailsService = userDetailsService;
     }
 
@@ -53,25 +54,14 @@ public class JwtFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        UserDetails details = userDetailsService.loadUserByUsername(claims.getSubject());
         String username = claims.getSubject();
-        if(details == null || !details.getUsername().equals(username)) {
+        UserDetails details = userDetailsService.loadUserByUsername(username);
+        if (details == null) {
             filterChain.doFilter(request, response);
             return;
         }
-        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(details, null, details.getAuthorities());
-        auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-        log.info("authenticated username:{}", username);
+        Authentication auth = new UsernamePasswordAuthenticationToken(details, null, details.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
         filterChain.doFilter(request, response);
-    }
-
-    @Bean
-    @Autowired
-    public static UserDetailsService userDetailsService(UmsAdminMapper umsadminMapper) {
-        return username -> {
-            Optional<UmsAdmin> admin = umsadminMapper.getAdminByUsername(username);
-            return admin.map(AdminUserDetails::new).orElse(null);
-        };
     }
 }

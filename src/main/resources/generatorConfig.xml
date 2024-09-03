@@ -3,12 +3,13 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
     <context id="dsql" targetRuntime="MyBatis3DynamicSql">
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
         <jdbcConnection driverClass="org.mariadb.jdbc.Driver"
                         connectionURL="jdbc:mariadb://localhost:3306/mall" userId="root"/>
 
         <javaModelGenerator targetPackage="com.example.mall.model" targetProject="src/main/java"/>
 
-        <javaClientGenerator targetPackage="com.example.mall.mappers" targetProject="src/main/java"/>
+        <javaClientGenerator targetPackage="com.example.mall.mappers.generated" targetProject="src/main/java"/>
 
         <table tableName="ums_admin" mapperName="GeneratedUmsAdminMapper"/>
         <table tableName="ums_role" mapperName="GeneratedUmsRoleMapper"/>

@@ -10,10 +10,12 @@ import java.util.List;
 @Service
 public class UmsRoleService {
     private final UmsRoleMapper umsRoleMapper;
+
     @Autowired
     public UmsRoleService(UmsRoleMapper umsRoleMapper) {
         this.umsRoleMapper = umsRoleMapper;
     }
+
     public List<UmsMenu> getMenuList(Long adminId) {
         return umsRoleMapper.getMenuList(adminId);
     }

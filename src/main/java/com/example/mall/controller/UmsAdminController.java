@@ -7,9 +7,6 @@ import com.example.mall.model.UmsMenu;
 import com.example.mall.model.UmsRole;
 import com.example.mall.service.UmsAdminService;
 import com.example.mall.service.UmsRoleService;
-import jakarta.validation.constraints.NotEmpty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
@@ -19,7 +16,6 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
 @RestController

@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 @Mapper
-public interface UmsRoleMapper extends GeneratedUmsRoleMapper{
+public interface UmsRoleMapper extends GeneratedUmsRoleMapper {
     @Select("""
             SELECT m.id,
                    m.parent_id,

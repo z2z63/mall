@@ -1,0 +1,7 @@
+### GET request to example server
+GET http://localhost:8080/product/list?pageNum=1&pageSize=5
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImNyZWF0ZWQiOjE3MjUyNzMxNDg1MjksImV4cCI6MTcyNTg3Nzk0OH0.XLQtAEL6EZjDbg-XRlu5mv160sEcxGbK8heCdQ78zBI
+
+###
+POST http://localhost:8080/product/update/deleteStatus?ids=26&deleteStatus=1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImNyZWF0ZWQiOjE3MjUzNjM0MjEwOTIsImV4cCI6MTcyNTk2ODIyMX0.IIJ06Go6vlm4rGcfhfPyZC4CuIfmi6PHy84nJVxTqn8

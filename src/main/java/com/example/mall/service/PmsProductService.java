@@ -1,6 +1,7 @@
 package com.example.mall.service;
 
 import com.example.mall.dto.PmsProductQueryParam;
+import com.example.mall.dto.PmsProductUpdateParam;
 import com.example.mall.mappers.PmsProductMapper;
 import com.example.mall.model.PmsProduct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,5 +20,13 @@ public class PmsProductService {
 
     public List<PmsProduct> list(PmsProductQueryParam queryParam, Integer pageSize, Integer pageNum) {
         return pmsProductMapper.list(queryParam, pageSize, pageNum);
+    }
+
+    public Long count(PmsProductQueryParam queryParam) {
+        return pmsProductMapper.count(queryParam);
+    }
+
+    public Integer batchUpdate(List<Long> ids, PmsProductUpdateParam updateParam) {
+        return pmsProductMapper.batchUpdate(ids, updateParam);
     }
 }

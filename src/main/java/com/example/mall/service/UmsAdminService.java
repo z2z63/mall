@@ -6,48 +6,41 @@ import com.example.mall.mappers.UmsAdminMapper;
 import com.example.mall.model.UmsAdmin;
 import com.example.mall.model.UmsRole;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.example.mall.mappers.UmsAdminMapper;
-
-import static org.mybatis.dynamic.sql.SqlBuilder.*;
-
 @Service
 public class UmsAdminService {
     private final UmsAdminMapper umsadminMapper;
-    private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+    private final AuthenticationManager authManager;
 
     @Autowired
-    public UmsAdminService(UmsAdminMapper umsadminMapper, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
+    public UmsAdminService(UmsAdminMapper umsadminMapper, JwtUtil jwtUtil, AuthenticationManager authManager) {
         this.umsadminMapper = umsadminMapper;
-        this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
+        this.authManager = authManager;
     }
 
     public String login(String username, String password) {
-        Optional<UmsAdmin> usmAdmin = umsadminMapper.getAdminByUsername(username);
-        if (usmAdmin.isEmpty()) {
-            return null;
-        }
-        UmsAdmin umsadmin = usmAdmin.get();
-        if (passwordEncoder.matches(password, umsadmin.getPassword())) {
-            AdminUserDetails details = new AdminUserDetails(umsadmin);
-            UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(username, null, details.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            return jwtUtil.generateToken(details);
+        AdminUserDetails userDetails = new AdminUserDetails(username, password);
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, password);
+        authToken.setDetails(userDetails);
+        Authentication auth = authManager.authenticate(authToken);
+        if (auth.isAuthenticated()) {
+            SecurityContextHolder.getContext().setAuthentication(auth);
+            return jwtUtil.generateToken((AdminUserDetails) auth.getDetails());
         }
         return null;
     }
-
+    @Cacheable("admin-getAdminByUsername")
     public UmsAdmin getAdminByUsername(String username) {
         Optional<UmsAdmin> usmAdmin = umsadminMapper.getAdminByUsername(username);
         return usmAdmin.orElse(null);
